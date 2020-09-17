@@ -6,19 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Hello World | Hexo</title>
+  <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="堆的构建与堆排序1.堆的构建定义：最值位与二叉树根节点，实质上是一颗完全二叉树（深度假设为h，除去第h层外，（1-&gt;h-1)层节点都到达最大个数，第h层所有节点都连续集中在左边。 实现：n个元素序列（h1，h2……..,hn)当且仅当（hi &gt;&#x3D; h(2i+1) &amp;&amp; hi &gt;&#x3D; h(2i)),此时为大顶堆。小顶堆相反。**在树中2i，2i+1为i的孩纸节点 **">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://example.com/2020/09/10/hello-world/index.html">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2020/09/17/heap_heapSort/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="堆的构建与堆排序1.堆的构建定义：最值位与二叉树根节点，实质上是一颗完全二叉树（深度假设为h，除去第h层外，（1-&gt;h-1)层节点都到达最大个数，第h层所有节点都连续集中在左边。 实现：n个元素序列（h1，h2……..,hn)当且仅当（hi &gt;&#x3D; h(2i+1) &amp;&amp; hi &gt;&#x3D; h(2i)),此时为大顶堆。小顶堆相反。**在树中2i，2i+1为i的孩纸节点 **">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-09-10T05:51:21.846Z">
-<meta property="article:modified_time" content="2020-09-10T05:51:21.846Z">
+<meta property="og:image" content="http://example.com/asset/1.png">
+<meta property="og:image" content="http://example.com/asset/2.png">
+<meta property="article:published_time" content="2020-09-17T13:59:17.626Z">
+<meta property="article:modified_time" content="2020-09-17T15:10:19.086Z">
 <meta property="article:author" content="Lost_wander">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/asset/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -150,39 +153,26 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-hello-world" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-heap_heapSort" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Hello World
-    </h1>
-  
-
-        
-        <a href="/2020/09/10/hello-world/" class="archive-article-date">
-  	<time datetime="2020-09-10T05:51:21.846Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-10</time>
-</a>
-        
-      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+        <h1 id="堆的构建与堆排序"><a href="#堆的构建与堆排序" class="headerlink" title="堆的构建与堆排序"></a>堆的构建与堆排序</h1><h2 id="1-堆的构建"><a href="#1-堆的构建" class="headerlink" title="1.堆的构建"></a>1.堆的构建</h2><h3 id="定义："><a href="#定义：" class="headerlink" title="定义："></a>定义：</h3><p>最值位与二叉树根节点，实质上是一颗完全二叉树（深度假设为h，除去第h层外，（1-&gt;h-1)层节点都到达最大个数，第h层所有节点都连续集中在左边。</p>
+<h3 id="实现："><a href="#实现：" class="headerlink" title="实现："></a>实现：</h3><p>n个元素序列（h1，h2……..,hn)当且仅当（hi &gt;= h(2i+1) &amp;&amp; hi &gt;= h(2i)),此时为大顶堆。小顶堆相反。**在树中2i，2i+1为i的孩纸节点 ** </p>
+<p>从（n/2)开始到1 结束对每一个分支节点都进行调整（下沉）到无法下下沉，以便形成以分支点为根的堆，然后形成整体堆。**时间复杂度O(n)**，证明参考书籍</p>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Heap</span> </span>&#123;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Description</span>: 堆的初始化 T:O(n)</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Param</span>: [heap]</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return</span>: void</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Author</span>: wander</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Date</span>: 2020/9/17</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">heapinitialized</span><span class="params">(List&lt;Integer&gt; heap)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = heap.size() / <span class="number">2</span>;i &gt; <span class="number">0</span>;i--)&#123;</span><br><span class="line">            adjust(heap,i,heap.size()-<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Description</span>:  调整分支节点</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Param</span>: [heap, i, n]</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return</span>: void</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Author</span>: wander</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Date</span>: 2020/9/17</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">adjust</span><span class="params">(List&lt;Integer&gt; heap,<span class="keyword">int</span> i,<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> child;</span><br><span class="line">        <span class="keyword">for</span>(;i &lt; n / <span class="number">2</span>;)&#123;</span><br><span class="line">            child = i * <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(child+<span class="number">1</span> &lt; n &amp;&amp; heap.get(child) &lt; heap.get(child+<span class="number">1</span>))</span><br><span class="line">            child++;<span class="comment">//child 指向较大的孩子</span></span><br><span class="line">            <span class="keyword">if</span>(heap.get(i) &lt; heap.get(child))&#123;</span><br><span class="line">            swap(heap,i,child);</span><br><span class="line">            i = child;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Description</span>:     swap交换两个节点的值</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Param</span>: [heap, x, y]</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return</span>: void</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Author</span>: wander</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Date</span>: 2020/9/17</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(List&lt;Integer&gt; heap,<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> tmp = heap.get(x);</span><br><span class="line">        heap.set(x,heap.get(y));</span><br><span class="line">        heap.set(y,tmp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p><img src="/asset/1.png"></p>
+<p>（结构图来自网络，侵删）</p>
+<h2 id="2-堆排序"><a href="#2-堆排序" class="headerlink" title="2.堆排序"></a>2.堆排序</h2><h3 id="实现：-1"><a href="#实现：-1" class="headerlink" title="实现："></a>实现：</h3><p>通过每次交换根节点与最后一位，在进行堆重建。每次筛除当前最值，实现排序。 <strong>时间复杂度O(nlogn)</strong></p>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Description</span>: 大顶堆排序 T:O(nlogn)</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Param</span>: [heap]</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return</span>: void</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Author</span>: wander</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Date</span>: 2020/9/17</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">heapSort</span><span class="params">(List&lt;Integer&gt; heap)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = heap.size()-<span class="number">1</span>; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="comment">//把根节点跟最后一个元素交换位置，调整剩下的n-1个节点，即可排好序,每次把最大值推出尾部</span></span><br><span class="line">            swap(heap,<span class="number">1</span>, i);</span><br><span class="line">            adjust(heap,<span class="number">1</span>, i - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p><img src="/asset/2.png"></p>
+<a id="more"></a>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
       
 
@@ -262,7 +252,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/09/10/hello-world/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/09/17/heap_heapSort/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -276,15 +266,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/09/17/heap_heapSort/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          (no title)
-        
-      </div>
-    </a>
   
+    <a href="/2020/09/10/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hello World</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
