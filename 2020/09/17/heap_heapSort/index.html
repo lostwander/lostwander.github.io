@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>大顶堆 | Welcome！</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="堆的构建与堆排序1.堆的构建">
+  <meta name="description" content="堆的构建与堆排序">
 <meta property="og:type" content="article">
 <meta property="og:title" content="大顶堆">
 <meta property="og:url" content="http://example.com/2020/09/17/heap_heapSort/index.html">
 <meta property="og:site_name" content="Welcome！">
-<meta property="og:description" content="堆的构建与堆排序1.堆的构建">
+<meta property="og:description" content="堆的构建与堆排序">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/asset/1.png">
 <meta property="og:image" content="http://example.com/asset/2.png">
 <meta property="article:published_time" content="2020-09-17T13:59:17.626Z">
-<meta property="article:modified_time" content="2020-09-17T15:23:58.490Z">
+<meta property="article:modified_time" content="2020-09-29T11:28:40.686Z">
 <meta property="article:author" content="Lost_wander">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/asset/1.png">
@@ -173,9 +173,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="堆的构建与堆排序"><a href="#堆的构建与堆排序" class="headerlink" title="堆的构建与堆排序"></a>堆的构建与堆排序</h1><h2 id="1-堆的构建"><a href="#1-堆的构建" class="headerlink" title="1.堆的构建"></a>1.堆的构建</h2><a id="more"></a>
-
-<h3 id="定义："><a href="#定义：" class="headerlink" title="定义："></a>定义：</h3><p>最值位与二叉树根节点，实质上是一颗完全二叉树（深度假设为h，除去第h层外，（1-&gt;h-1)层节点都到达最大个数，第h层所有节点都连续集中在左边。</p>
+        <h1 id="堆的构建与堆排序"><a href="#堆的构建与堆排序" class="headerlink" title="堆的构建与堆排序"></a>堆的构建与堆排序</h1><a id="more"></a>
+<h2 id="1-堆的构建"><a href="#1-堆的构建" class="headerlink" title="1.堆的构建"></a>1.堆的构建</h2><h3 id="定义："><a href="#定义：" class="headerlink" title="定义："></a>定义：</h3><p>最值位与二叉树根节点，实质上是一颗完全二叉树（深度假设为h，除去第h层外，（1-&gt;h-1)层节点都到达最大个数，第h层所有节点都连续集中在左边。</p>
 <h3 id="实现："><a href="#实现：" class="headerlink" title="实现："></a>实现：</h3><p>n个元素序列（h1，h2……..,hn)当且仅当（hi &gt;= h(2i+1) &amp;&amp; hi &gt;= h(2i)),此时为大顶堆。小顶堆相反。**在树中2i，2i+1为i的孩纸节点 ** </p>
 <p>从（n/2)开始到1 结束对每一个分支节点都进行调整（下沉）到无法下下沉，以便形成以分支点为根的堆，然后形成整体堆。**时间复杂度O(n)**，证明参考书籍</p>
 <p>代码：</p>
