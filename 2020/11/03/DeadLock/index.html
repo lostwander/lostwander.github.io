@@ -6,17 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2020 | Welcome！</title>
+  <title>Welcome！</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="个人博客">
-<meta property="og:type" content="website">
+  <meta name="description" content="title:DeadLock从操作系统角度看死锁">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Welcome！">
-<meta property="og:url" content="http://example.com/archives/2020/index.html">
+<meta property="og:url" content="http://example.com/2020/11/03/DeadLock/index.html">
 <meta property="og:site_name" content="Welcome！">
-<meta property="og:description" content="个人博客">
+<meta property="og:description" content="title:DeadLock从操作系统角度看死锁">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2020/11/03/asset/DeadLock/image-20201103131119769.png">
+<meta property="og:image" content="http://example.com/2020/11/03/asset/DeadLock/image-20201103140458461.png">
+<meta property="og:image" content="http://example.com/2020/11/03/asset/DeadLock/image-20201103141750192.png">
+<meta property="og:image" content="http://example.com/2020/11/03/asset/DeadLock/image-20201103154125459.png">
+<meta property="og:image" content="http://example.com/2020/11/03/asset/DeadLock/image-20201107123207585.png">
+<meta property="article:published_time" content="2020-11-03T08:04:04.372Z">
+<meta property="article:modified_time" content="2020-11-07T04:45:16.120Z">
 <meta property="article:author" content="Lost_wander">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/11/03/asset/DeadLock/image-20201103131119769.png">
   
     <link rel="alternative" href="/atom.xml" title="Welcome！" type="application/atom+xml">
   
@@ -148,205 +156,226 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-DeadLock" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<h2 id="title-DeadLock"><a href="#title-DeadLock" class="headerlink" title="title:DeadLock"></a>title:DeadLock</h2><h3 id="从操作系统角度看死锁"><a href="#从操作系统角度看死锁" class="headerlink" title="从操作系统角度看死锁"></a>从操作系统角度看死锁</h3><a id="more"></a>
+
+<p>1.死锁的定义：</p>
+<h4 id=""><a href="#" class="headerlink" title=""></a><img src="../asset/DeadLock/image-20201103131119769.png"></h4><p>2.资源死锁的产生条件：</p>
+<ul>
+<li>互斥条件</li>
+<li>占有和等待条件</li>
+<li>不可将抢占条件</li>
+<li>环路等待条件</li>
+</ul>
+<p><strong>当且仅当</strong>以上四个条件同时满足时才会产生资源死锁</p>
+<p>3.解决策略</p>
+<ul>
+<li><p>鸵鸟算法，忽略死锁(当死锁发生不频繁的时候)</p>
+</li>
+<li><p>死锁检测和恢复</p>
+<ul>
+<li><img src="../asset/DeadLock/image-20201103140458461.png" alt="死锁">DFS遍历检测回路是否存在环路</li>
+<li><img src="../asset/DeadLock/image-20201103141750192.png" alt="矩阵检测">矩阵向量检测</li>
+</ul>
+</li>
+<li><p>死锁恢复</p>
+<ul>
+<li>利用抢占恢复（由资源的特性影响，一般比较困难）</li>
+<li>利用回滚恢复（MySQL 的InnoDB）</li>
+<li>通过杀死进程恢复</li>
+</ul>
+</li>
+<li><p>死锁避免（防止进入不安全状态）</p>
+<p><strong>安全状态：</strong>即时所有进程突然请求对资源的最大需求，也存在某种调度次序能够使得每一个进程运行完毕</p>
+<p><strong>不安全状态：</strong>有存在发生死锁的可能性，但并不一定发生</p>
+<ul>
+<li><p>资源轨迹图：基于安全状态的一种方法</p>
+</li>
+<li><p>银行家算法：对每一个请求进行检查，如果可以到达安全状态，则执行请求，否则拒绝或推迟</p>
+<p><strong>缺点</strong>：需要进程在运行前就知道所需的最大资源量，可行性较低。</p>
+</li>
+</ul>
+</li>
+<li><p>死锁预防（针对四个条件）</p>
+<ul>
+<li><p>破坏互斥条件</p>
+<ul>
+<li>资源不互斥（<strong>如：</strong> 打印机可以允许多个进程输出，但实际上由一个守护进程唯一控制打印机）存在资源</li>
+</ul>
+</li>
+<li><p>破坏占有并等待条件</p>
+<ul>
+<li>必须一次性请求全部需要的资源，否则不分配（存在银行家算法的同样问题：对未知的请求无法合理决定）</li>
+<li>请求资源前先释放已有的资源，再尝试一次获取所有资源</li>
+</ul>
+</li>
+<li><p>破坏不可抢占条件</p>
+<ul>
+<li>资源的特性可能决定抢占会导致出错（部分资源可以通过虚拟化解决）</li>
+<li>数据库的记录等必须别锁定，无法虚拟化</li>
+</ul>
+</li>
+<li><p>破坏环路等待条件</p>
+<ul>
+<li><p>对资源进行编号</p>
+<p>进程无法请求小于已有资源编号的资源</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>总结</strong><img src="../asset/DeadLock/image-20201103154125459.png" alt="conclusion"></p>
+</li>
+</ul>
+<p>4.信号死锁</p>
+<ul>
+<li><p>协同同步的异常情况</p>
+<p>A向B发送请求后阻塞至接收B响应，假设请求丢失，B会阻塞等待一个向其发命令的请求，则发生死锁</p>
+</li>
+<li><p>解决：超时响应</p>
+</li>
+<li><p>一致性问题：延迟请求等</p>
+<p><strong>通过协议解决</strong></p>
+</li>
+</ul>
+<p>5.活锁</p>
+<ul>
+<li>竞争失败后释放资源陷入互相谦让的尴尬的重复循环</li>
+</ul>
+<p><img src="../asset/DeadLock/image-20201107123207585.png"></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/11/03/DeadLock/" class="archive-article-date">
-  	<time datetime="2020-11-03T08:04:04.372Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-03</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/11/03/DeadLock/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/10/08/sorts/" class="archive-article-date">
-  	<time datetime="2020-10-08T07:57:26.074Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-08</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/10/08/sorts/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">常见排序</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/10/08/sorts/">常见排序</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/09/29/Singleton/" class="archive-article-date">
-  	<time datetime="2020-09-29T10:39:54.378Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/09/29/Singleton/">单例模式</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/09/28/Integer/" class="archive-article-date">
-  	<time datetime="2020-09-28T03:08:48.133Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/09/28/Integer/">Integer 对象解析</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/09/20/jvm/" class="archive-article-date">
-  	<time datetime="2020-09-20T15:19:08.127Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/09/20/jvm/">jvm总结（一）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/09/17/heap_heapSort/" class="archive-article-date">
-  	<time datetime="2020-09-17T13:59:17.626Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/09/17/heap_heapSort/">大顶堆</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/09/10/hello-world/" class="archive-article-date">
-  	<time datetime="2020-09-10T05:51:21.846Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-10</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/09/10/hello-world/">Hello World</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -369,8 +398,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
